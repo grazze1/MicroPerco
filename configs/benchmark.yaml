@@ -1,0 +1,23 @@
+schema_version: 1
+domain:
+  size: [50.0, 50.0, 50.0]
+  periodic: [true, true, true]
+particles:
+  - name: bead
+    shape: sphere
+    radius: 0.5
+    count: 100
+contact:
+  type: threshold
+  threshold: 0.2
+percolation:
+  axis: x
+simulation:
+  trials: 10
+  seed: 42
+benchmark:
+  population: bead
+  particle_counts: [10, 50, 100, 500, 1000]
+  repeats: 5
+  warmup: 1
+  seed: 42

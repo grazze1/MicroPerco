@@ -1,0 +1,48 @@
+{
+  "pdf": "docs/assets/microstructure_3d.pdf",
+  "auditable": true,
+  "verdict": "REVIEW REQUIRED",
+  "page_count": 1,
+  "visible_text_box_count": 4,
+  "text_trace_count": 4,
+  "stroke_path_count": 50,
+  "filled_region_count": 25,
+  "image_region_count": 0,
+  "summary": {
+    "fail": 0,
+    "warn": 1,
+    "contained_fill_overlays": 0,
+    "contained_image_overlays": 0
+  },
+  "thresholds": {
+    "text_inset_pt": 0.6,
+    "min_overlap_ratio": 0.05,
+    "clipping_tolerance_pt": 0.5
+  },
+  "findings": [
+    {
+      "severity": "WARN",
+      "kind": "text-fill-edge",
+      "page": 1,
+      "message": "Text partially overlaps the edge of 1 filled region(s)",
+      "text": "y",
+      "text_bbox": [
+        344.6918029785156,
+        291.2498474121094,
+        348.8343811035156,
+        298.2498474121094
+      ],
+      "other_text": null,
+      "other_bbox": [
+        123.24464416503906,
+        196.22457885742188,
+        363.3812561035156,
+        294.01922607421875
+      ],
+      "object_count": 1,
+      "object_indexes": [
+        4
+      ]
+    }
+  ]
+}

@@ -1,0 +1,86 @@
+[build-system]
+requires = ["setuptools>=77", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "microperco"
+dynamic = ["version"]
+description = "A 3D microstructure percolation simulation and inverse design toolkit"
+readme = "README.md"
+requires-python = ">=3.10"
+license = "Apache-2.0"
+license-files = ["LICENSE", "NOTICE"]
+authors = [{ name = "MicroPerco contributors" }]
+keywords = ["computational-geometry", "inverse-design", "microstructure", "monte-carlo", "percolation"]
+classifiers = [
+  "Development Status :: 5 - Production/Stable",
+  "Intended Audience :: Science/Research",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Topic :: Scientific/Engineering",
+  "Typing :: Typed",
+]
+dependencies = ["numpy>=1.24", "PyYAML>=6.0", "scipy>=1.10"]
+
+[project.optional-dependencies]
+plot = ["matplotlib>=3.7"]
+validation = ["hpp-fcl>=2.4"]
+dev = [
+  "build>=1.0",
+  "matplotlib>=3.7",
+  "mypy>=1.8",
+  "pytest>=7.4",
+  "pytest-cov>=4.1",
+  "ruff>=0.5",
+]
+
+[project.scripts]
+microperco = "microperco.cli:main"
+
+[project.urls]
+Documentation = "https://github.com/grazze1/MicroPerco#readme"
+Issues = "https://github.com/grazze1/MicroPerco/issues"
+Repository = "https://github.com/grazze1/MicroPerco"
+
+[tool.setuptools.dynamic]
+version = { attr = "microperco._version.__version__" }
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+microperco = ["py.typed"]
+
+[tool.pytest.ini_options]
+addopts = "--strict-config --strict-markers -ra"
+testpaths = ["tests"]
+
+[tool.coverage.run]
+branch = true
+source = ["microperco"]
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = true
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["B", "E", "F", "I", "N", "UP", "W"]
+ignore = ["N803", "N806"]
+
+[tool.mypy]
+python_version = "3.10"
+strict = true
+warn_unreachable = true
+packages = ["microperco"]
+mypy_path = "src"
+
+[[tool.mypy.overrides]]
+module = ["matplotlib.*", "mpl_toolkits.*", "scipy.*", "yaml"]
+ignore_missing_imports = true

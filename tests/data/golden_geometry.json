@@ -1,0 +1,6 @@
+{
+  "cylinder_endcap_gap": 0.5,
+  "exact_contact_threshold": 1.8,
+  "periodic_shift": [-1, 0, 0],
+  "sphere_gap": 1.0
+}

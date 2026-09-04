@@ -1,0 +1,35 @@
+name: Prepare release artifacts
+
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: python -m pip install build twine
+      - run: python -m build
+      - run: python -m twine check dist/*
+      - name: Smoke-test wheel
+        shell: bash
+        run: |
+          python -m venv release-test
+          release-test/bin/python -m pip install dist/*.whl
+          release-test/bin/microperco --version
+          release-test/bin/microperco validate
+      - uses: actions/upload-artifact@v4
+        with:
+          name: release-distributions-${{ github.ref_name }}
+          path: dist/*
+
+# Publishing is intentionally separate. Configure PyPI Trusted Publishing and
+# add an explicit environment-protected job only after maintainer approval.

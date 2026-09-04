@@ -1,0 +1,60 @@
+schema_version: 1
+domain:
+  size: [10.0, 10.0, 10.0]
+  periodic: [false, true, true]
+
+particles:
+  - name: fiber
+    shape: cylinder
+    radius: 0.20
+    length: 3.0
+    count: 40
+    material:
+      name: conductive-fiber
+      cost_per_volume: 1.0
+  - name: bead
+    shape: sphere
+    radius: 0.35
+    count: 15
+    material:
+      name: conductive-bead
+      cost_per_volume: 0.25
+
+contact:
+  type: threshold
+  threshold: 0.10
+
+percolation:
+  axis: x
+  mode: face_to_face
+  wrapped_parent: false
+
+simulation:
+  trials: 1000
+  seed: 42
+  confidence: 0.95
+  neighbor_backend: cell_list
+
+critical:
+  population: fiber
+  counts: [20, 25, 30, 35, 40, 45, 50, 55, 60]
+  target_probability: 0.90
+  search_trials: 1000
+  certification_trials: 5000
+  strategy: pava
+
+optimization:
+  count_bounds:
+    fiber: [0, 20]
+    bead: [0, 60]
+  target_probability: 0.90
+  search_trials: 250
+  certification_trials: 5000
+  max_candidates: 100000
+
+benchmark:
+  population: bead
+  particle_counts: [10, 50, 100, 500, 1000]
+  repeats: 5
+  warmup: 1
+  seed: 42

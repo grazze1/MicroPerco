@@ -1,0 +1,11 @@
+cff-version: 1.2.0
+message: "If you use MicroPerco, please cite the software using this metadata."
+title: "MicroPerco: 3D microstructure percolation and inverse design"
+type: software
+version: 1.0.0
+date-released: 2026-09-04
+license: Apache-2.0
+repository-code: "https://github.com/grazze1/MicroPerco"
+url: "https://github.com/grazze1/MicroPerco"
+authors:
+  - name: "MicroPerco contributors"

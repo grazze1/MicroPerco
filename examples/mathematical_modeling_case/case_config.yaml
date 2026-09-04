@@ -1,0 +1,46 @@
+schema_version: 1
+domain:
+  size: [10000.0, 10000.0, 10000.0]
+  periodic: [true, true, true]
+particles:
+  - name: fiber_A
+    shape: cylinder
+    radius: 30.0
+    length: 5000.0
+    count: 8
+    material:
+      name: material_A
+      cost_per_volume: 1.05
+  - name: bead_B
+    shape: sphere
+    radius: 200.0
+    count: 0
+    material:
+      name: material_B
+      cost_per_volume: 0.05
+contact:
+  type: threshold
+  threshold: 1.8
+percolation:
+  axis: x
+  mode: face_to_face
+  wrapped_parent: false
+simulation:
+  trials: 1000
+  seed: 42
+  confidence: 0.95
+critical:
+  population: fiber_A
+  counts: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+  target_probability: 0.90
+  search_trials: 1000
+  certification_trials: 5000
+  strategy: pava
+optimization:
+  count_bounds:
+    fiber_A: [0, 20]
+    bead_B: [0, 100]
+  target_probability: 0.90
+  search_trials: 250
+  certification_trials: 5000
+  max_candidates: 100000

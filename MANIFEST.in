@@ -1,0 +1,12 @@
+include LICENSE NOTICE README.md CHANGELOG.md CITATION.cff
+include CONTRIBUTING.md CODE_OF_CONDUCT.md SECURITY.md
+include RELEASE_READINESS.md
+recursive-include src *.py py.typed
+recursive-include configs *.yaml
+recursive-include docs *.py *.md *.png *.svg *.pdf *.json
+exclude docs/assets/qa/*.alignment.svg
+exclude docs/assets/qa/*.collision-audit.pdf
+recursive-include examples *.py *.md *.yaml
+recursive-include tests *.py *.json
+recursive-include validation *.py *.md *.json
+recursive-include benchmarks *.py *.md *.json

@@ -1,0 +1,130 @@
+{
+  "numpy": "2.4.6",
+  "platform": "Linux-6.8.0-138-generic-x86_64-with-glibc2.35",
+  "python": "3.11.15",
+  "repeats": 5,
+  "results": [
+    {
+      "backend": "bruteforce",
+      "candidate_pairs": 45,
+      "distance_evaluations": 45,
+      "first_quartile_seconds": 0.0018445789974066429,
+      "median_seconds": 0.0018519130026106723,
+      "problem_size": 10,
+      "repeats": 5,
+      "speedup": 1.0,
+      "spread_seconds": 3.307000224594958e-05,
+      "third_quartile_seconds": 0.0018776489996525925
+    },
+    {
+      "backend": "cell_list",
+      "candidate_pairs": 0,
+      "distance_evaluations": 0,
+      "first_quartile_seconds": 0.00037833199894521385,
+      "median_seconds": 0.0003784060027101077,
+      "problem_size": 10,
+      "repeats": 5,
+      "speedup": 4.893984210999424,
+      "spread_seconds": 1.0219991963822395e-06,
+      "third_quartile_seconds": 0.0003793539981415961
+    },
+    {
+      "backend": "bruteforce",
+      "candidate_pairs": 1225,
+      "distance_evaluations": 1225,
+      "first_quartile_seconds": 0.0459833630011417,
+      "median_seconds": 0.046009541998500936,
+      "problem_size": 50,
+      "repeats": 5,
+      "speedup": 1.0,
+      "spread_seconds": 0.00034545599919511005,
+      "third_quartile_seconds": 0.04632881900033681
+    },
+    {
+      "backend": "cell_list",
+      "candidate_pairs": 0,
+      "distance_evaluations": 0,
+      "first_quartile_seconds": 0.0016829499982122798,
+      "median_seconds": 0.0017028050024237018,
+      "problem_size": 50,
+      "repeats": 5,
+      "speedup": 27.01985367262421,
+      "spread_seconds": 2.4105003831209615e-05,
+      "third_quartile_seconds": 0.0017070550020434894
+    },
+    {
+      "backend": "bruteforce",
+      "candidate_pairs": 4950,
+      "distance_evaluations": 4950,
+      "first_quartile_seconds": 0.19373297699712566,
+      "median_seconds": 0.19451570099772653,
+      "problem_size": 100,
+      "repeats": 5,
+      "speedup": 1.0,
+      "spread_seconds": 0.0016909690020838752,
+      "third_quartile_seconds": 0.19542394599920954
+    },
+    {
+      "backend": "cell_list",
+      "candidate_pairs": 1,
+      "distance_evaluations": 1,
+      "first_quartile_seconds": 0.003733830999408383,
+      "median_seconds": 0.0037368199991760775,
+      "problem_size": 100,
+      "repeats": 5,
+      "speedup": 52.05380538549216,
+      "spread_seconds": 6.747999577783048e-06,
+      "third_quartile_seconds": 0.003740578998986166
+    },
+    {
+      "backend": "bruteforce",
+      "candidate_pairs": 124750,
+      "distance_evaluations": 124750,
+      "first_quartile_seconds": 4.854973792997043,
+      "median_seconds": 4.905377873998077,
+      "problem_size": 500,
+      "repeats": 5,
+      "speedup": 1.0,
+      "spread_seconds": 0.07002488000216545,
+      "third_quartile_seconds": 4.924998672999209
+    },
+    {
+      "backend": "cell_list",
+      "candidate_pairs": 16,
+      "distance_evaluations": 16,
+      "first_quartile_seconds": 0.019504013998812297,
+      "median_seconds": 0.019531414000084624,
+      "problem_size": 500,
+      "repeats": 5,
+      "speedup": 251.1532382641023,
+      "spread_seconds": 0.00014300500333774835,
+      "third_quartile_seconds": 0.019647019002150046
+    },
+    {
+      "backend": "bruteforce",
+      "candidate_pairs": 499500,
+      "distance_evaluations": 499500,
+      "first_quartile_seconds": 19.7184265399992,
+      "median_seconds": 19.76387806999992,
+      "problem_size": 1000,
+      "repeats": 5,
+      "speedup": 1.0,
+      "spread_seconds": 0.09085965199847124,
+      "third_quartile_seconds": 19.80928619199767
+    },
+    {
+      "backend": "cell_list",
+      "candidate_pairs": 52,
+      "distance_evaluations": 52,
+      "first_quartile_seconds": 0.04082625299997744,
+      "median_seconds": 0.040882819001126336,
+      "problem_size": 1000,
+      "repeats": 5,
+      "speedup": 483.42747767602367,
+      "spread_seconds": 0.00020910899911541492,
+      "third_quartile_seconds": 0.041035361999092856
+    }
+  ],
+  "seed": 42,
+  "warmup": 1
+}
