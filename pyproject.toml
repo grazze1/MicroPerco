@@ -31,10 +31,11 @@ validation = ["hpp-fcl>=2.4"]
 dev = [
   "build>=1.0",
   "matplotlib>=3.7",
-  "mypy>=1.8",
+  "mypy>=1.8,<2",
   "pytest>=7.4",
   "pytest-cov>=4.1",
   "ruff>=0.5",
+  "types-PyYAML>=6.0",
 ]
 
 [project.scripts]
