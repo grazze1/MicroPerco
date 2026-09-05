@@ -1,0 +1,87 @@
+{
+  "builtin_checks": [
+    {
+      "detail": "computed=1, expected=1",
+      "name": "analytic sphere gap",
+      "passed": true
+    },
+    {
+      "detail": "computed=0.5, expected=0.5",
+      "name": "cylinder end-cap gap",
+      "passed": true
+    },
+    {
+      "detail": "gap=0, shift=(-1, 0, 0)",
+      "name": "periodic minimum image",
+      "passed": true
+    },
+    {
+      "detail": "edges=0, candidates=378->3",
+      "name": "optimized/reference contact parity",
+      "passed": true
+    },
+    {
+      "detail": "path=(0, 1, 2, 3, 4)",
+      "name": "known spanning chain and solver parity",
+      "passed": true
+    },
+    {
+      "detail": "conductance=1.2, expected=1.2",
+      "name": "series resistor network",
+      "passed": true
+    },
+    {
+      "detail": "sigma=0.1041666666666667, expected=0.1041666666666667",
+      "name": "finite-electrode chain conductivity",
+      "passed": true
+    },
+    {
+      "detail": "g(0.2)=exp(-2), cutoff=0.6",
+      "name": "exponential tunneling law",
+      "passed": true
+    }
+  ],
+  "contact_search_parity": {
+    "bruteforce_candidates": 5672,
+    "bruteforce_distance_evaluations": 5672,
+    "cases": 24,
+    "cell_list_candidates": 80,
+    "cell_list_distance_evaluations": 80
+  },
+  "environment": {
+    "numpy": "2.4.6",
+    "platform": "Linux-6.8.0-138-generic-x86_64-with-glibc2.35",
+    "python": "3.11.15",
+    "scipy": "1.17.1"
+  },
+  "geometry_scipy": {
+    "acceptance_limit": 2e-06,
+    "cases": 24,
+    "max_absolute_error": 6.730511703523234e-10,
+    "mean_absolute_error": 1.9759947844644188e-10
+  },
+  "isotropy": {
+    "count": 100000,
+    "mean": [
+      0.0011104847338409452,
+      -0.0014470410899597064,
+      0.002054364464013389
+    ],
+    "positive_fraction": [
+      0.50179,
+      0.50059,
+      0.50053
+    ],
+    "second_moment": [
+      0.33309154383180917,
+      0.3331968930238544,
+      0.33371156314433237
+    ]
+  },
+  "passed": true,
+  "rng_reproducible": true,
+  "solver_parity": {
+    "face_to_face_cases": 15,
+    "periodic_wrap_cases": 9
+  }
+}

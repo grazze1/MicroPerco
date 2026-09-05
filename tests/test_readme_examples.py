@@ -2,11 +2,15 @@
 """Executable contract for the README Quick Start."""
 
 from microperco import (
+    ConstantConductanceModel,
     Domain,
     MonteCarloSimulator,
     PopulationSpec,
+    Sphere,
     SphereSpec,
     ThresholdContactModel,
+    TunnelingConductanceModel,
+    analyze_directional_conductivity,
     analyze_percolation,
     generate_microstructure,
 )
@@ -41,3 +45,17 @@ def test_readme_single_realization() -> None:
         axis="x",
     )
     assert graph.particle_count == 24
+
+
+def test_readme_conductivity() -> None:
+    import math
+
+    particles = (Sphere((-1.25, 0, 0), 1), Sphere((1.25, 0, 0), 1))
+    result = analyze_directional_conductivity(
+        particles,
+        Domain((4.5, 3.0, 3.0), False),
+        TunnelingConductanceModel(contact_conductance=2.0, decay_length=0.5, cutoff=0.5),
+        electrode_model=ConstantConductanceModel(contact_conductance=10.0),
+    )
+    assert math.isclose(result.sigma_x, 0.12838526097369987, rel_tol=1e-12)
+    assert result.sigma_y == result.sigma_z == 0

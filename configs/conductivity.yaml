@@ -1,0 +1,28 @@
+# Lengths are in one consistent user-defined unit; conductances are in siemens.
+schema_version: 1
+domain:
+  size: [4.0, 4.0, 4.0]
+  periodic: [true, true, true]
+particles:
+  - name: beads
+    shape: sphere
+    radius: 0.6
+    count: 24
+percolation:
+  mode: face_to_face
+simulation:
+  trials: 8
+  seed: 42
+  neighbor_backend: cell_list
+conductivity:
+  axes: [x, y, z]
+  applied_voltage: 1.0
+  model:
+    type: tunneling
+    contact_conductance: 1.0
+    decay_length: 0.2
+    cutoff: 0.6
+  electrode_model:
+    type: constant
+    contact_conductance: 10.0
+    cutoff: 0.0

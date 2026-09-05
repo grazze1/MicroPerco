@@ -5,13 +5,13 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "microperco"
 dynamic = ["version"]
-description = "A 3D microstructure percolation simulation and inverse design toolkit"
+description = "3D microstructure percolation, tunneling conductivity, and inverse design"
 readme = "README.md"
 requires-python = ">=3.10"
 license = "Apache-2.0"
 license-files = ["LICENSE", "NOTICE"]
 authors = [{ name = "MicroPerco contributors" }]
-keywords = ["computational-geometry", "inverse-design", "microstructure", "monte-carlo", "percolation"]
+keywords = ["conductivity", "computational-geometry", "inverse-design", "microstructure", "monte-carlo", "percolation"]
 classifiers = [
   "Development Status :: 5 - Production/Stable",
   "Intended Audience :: Science/Research",

@@ -3,6 +3,7 @@
 
 from .config import (
     BenchmarkConfig,
+    ConductivityConfig,
     ContactConfig,
     CriticalConfig,
     DomainConfig,
@@ -18,6 +19,7 @@ from .json import dump_json, dumps_json, to_jsonable
 
 __all__ = [
     "BenchmarkConfig",
+    "ConductivityConfig",
     "ContactConfig",
     "CriticalConfig",
     "DomainConfig",

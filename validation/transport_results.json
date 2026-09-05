@@ -1,0 +1,72 @@
+{
+  "builtin": {
+    "checks": [
+      {
+        "detail": "computed=1, expected=1",
+        "name": "analytic sphere gap",
+        "passed": true
+      },
+      {
+        "detail": "computed=0.5, expected=0.5",
+        "name": "cylinder end-cap gap",
+        "passed": true
+      },
+      {
+        "detail": "gap=0, shift=(-1, 0, 0)",
+        "name": "periodic minimum image",
+        "passed": true
+      },
+      {
+        "detail": "edges=0, candidates=378->3",
+        "name": "optimized/reference contact parity",
+        "passed": true
+      },
+      {
+        "detail": "path=(0, 1, 2, 3, 4)",
+        "name": "known spanning chain and solver parity",
+        "passed": true
+      },
+      {
+        "detail": "conductance=1.2, expected=1.2",
+        "name": "series resistor network",
+        "passed": true
+      },
+      {
+        "detail": "sigma=0.1041666666666667, expected=0.1041666666666667",
+        "name": "finite-electrode chain conductivity",
+        "passed": true
+      },
+      {
+        "detail": "g(0.2)=exp(-2), cutoff=0.6",
+        "name": "exponential tunneling law",
+        "passed": true
+      }
+    ],
+    "passed": true
+  },
+  "dense_oracle": {
+    "acceptance_limit": 1e-10,
+    "cases": 32,
+    "max_absolute_voltage_error": 6.6058269965196814e-15,
+    "max_relative_conductance_error": 5.795364188543317e-14,
+    "max_relative_kirchhoff_residual": 2.948199858906168e-14,
+    "seeds": [
+      2000,
+      2031
+    ]
+  },
+  "environment": {
+    "numpy": "2.4.6",
+    "platform": "Linux-6.8.0-138-generic-x86_64-with-glibc2.35",
+    "python": "3.11.15",
+    "scipy": "1.17.1"
+  },
+  "mixed_geometry_search_parity": {
+    "cases": 24,
+    "conducting_cases": 24,
+    "max_absolute_conductivity_difference": 0.0,
+    "seed": 2026
+  },
+  "passed": true,
+  "version": "2.0.0"
+}

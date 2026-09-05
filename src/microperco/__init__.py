@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
-"""MicroPerco: 3D microstructure percolation and inverse design."""
+"""MicroPerco: 3D microstructure percolation, conductivity, and inverse design."""
 
 from ._version import __version__
 from .contact import ContactEdge, ContactSearchResult, ThresholdContactModel, find_contacts
@@ -52,8 +52,40 @@ from .statistics import (
     pava,
     wilson_interval,
 )
+from .transport import (
+    ConductivityEstimate,
+    ConductivityMonteCarloResult,
+    ConductivityNetwork,
+    ConductivityResult,
+    ConstantConductanceModel,
+    DirectionalConductivityResult,
+    NetworkSolution,
+    ResistorEdge,
+    ResistorNetwork,
+    TunnelingConductanceModel,
+    analyze_conductivity,
+    analyze_directional_conductivity,
+    build_conductivity_network,
+    estimate_conductivity,
+    solve_resistor_network,
+)
 
 __all__ = [
+    "ConductivityEstimate",
+    "ConductivityMonteCarloResult",
+    "ConductivityNetwork",
+    "ConductivityResult",
+    "ConstantConductanceModel",
+    "DirectionalConductivityResult",
+    "NetworkSolution",
+    "ResistorEdge",
+    "ResistorNetwork",
+    "TunnelingConductanceModel",
+    "analyze_conductivity",
+    "analyze_directional_conductivity",
+    "build_conductivity_network",
+    "estimate_conductivity",
+    "solve_resistor_network",
     "DEFAULT_NUMERICAL_POLICY",
     "DEFAULT_POLICY",
     "EPS",

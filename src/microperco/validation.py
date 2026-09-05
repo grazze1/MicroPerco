@@ -12,6 +12,13 @@ from .domain import Domain
 from .geometry import distance, periodic_distance
 from .particles import Cylinder, Sphere
 from .percolation import analyze_percolation
+from .transport import (
+    ResistorEdge,
+    ResistorNetwork,
+    TunnelingConductanceModel,
+    analyze_conductivity,
+    solve_resistor_network,
+)
 
 
 @dataclass(frozen=True, slots=True)
@@ -104,6 +111,34 @@ def run_validation_suite() -> ValidationSummary:
         )
     )
 
+    circuit = ResistorNetwork(3, (ResistorEdge(0, 1, 2), ResistorEdge(1, 2, 3)), 0, 2)
+    solved = solve_resistor_network(circuit)
+    checks.append(
+        ValidationCheck(
+            "series resistor network",
+            abs(solved.effective_conductance - 1.2) < 1e-12
+            and solved.relative_kirchhoff_residual < 1e-12,
+            f"conductance={solved.effective_conductance:.16g}, expected=1.2",
+        )
+    )
+    transport = analyze_conductivity(chain, chain_domain)
+    expected_sigma = 10 / (16 * 6)
+    checks.append(
+        ValidationCheck(
+            "finite-electrode chain conductivity",
+            abs(transport.effective_conductivity - expected_sigma) < 1e-12,
+            f"sigma={transport.effective_conductivity:.16g}, expected={expected_sigma:.16g}",
+        )
+    )
+    tunneling = TunnelingConductanceModel(1, 0.2, 0.6)
+    checks.append(
+        ValidationCheck(
+            "exponential tunneling law",
+            abs(tunneling.conductance(0.2) - float(np.exp(-2))) < 1e-14
+            and tunneling.conductance(0.7) == 0,
+            "g(0.2)=exp(-2), cutoff=0.6",
+        )
+    )
     return ValidationSummary(all(check.passed for check in checks), tuple(checks))
 
 

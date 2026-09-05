@@ -2,6 +2,24 @@
 
 All notable changes follow the principles of [Keep a Changelog](https://keepachangelog.com/).
 
+## [2.0.0] - 2026-09-05
+
+### Added
+
+- Validated immutable resistor multigraphs and a sparse Dirichlet Kirchhoff solver with branch currents, node voltages, Joule power, and conservation diagnostics.
+- Constant and exponentially distance-dependent tunneling junction laws with explicit finite cutoffs and independent electrode contact parameters.
+- Geometry-to-network conversion for spheres and flat-ended cylinders, transverse periodic image channels, and equipotential parent fragments.
+- Finite-electrode effective conductivity and x/y/z measurements on the same realization.
+- Seeded conductivity Monte Carlo sampling, retained samples and provenance, means, and descriptive standard errors.
+- `microperco conductivity`, strict optional YAML configuration, runnable API and CLI examples, and physical/numerical methodology.
+- Analytic circuit tests, independent dense-solver comparisons, all-axis periodic backend parity, and built-in transport validation checks.
+
+### Compatibility and scope
+
+- Existing v1 APIs, commands, and `schema_version: 1` configurations remain supported; the conductivity block is additive.
+- Conductivity includes finite electrode junction resistance. Particles are equipotential, and directional measurements are not a full periodic conductivity tensor.
+- Disconnected networks return zero; floating voltages serialize as `null`. Unrepresentable or unresolved electrical solves fail explicitly.
+
 ## [1.0.0] - 2026-09-04
 
 ### Added

@@ -23,6 +23,7 @@ from ..generation import (
     PopulationSpec,
     SphereSpec,
 )
+from ..transport import ConstantConductanceModel, TunnelingConductanceModel
 
 
 class _UniqueKeyLoader(yaml.SafeLoader):
@@ -195,6 +196,14 @@ class BenchmarkConfig:
 
 
 @dataclass(frozen=True, slots=True)
+class ConductivityConfig:
+    model: ConstantConductanceModel | TunnelingConductanceModel
+    electrode_model: ConstantConductanceModel | TunnelingConductanceModel | None = None
+    axes: tuple[str, ...] = ("x", "y", "z")
+    applied_voltage: float = 1.0
+
+
+@dataclass(frozen=True, slots=True)
 class ProjectConfig:
     schema_version: int
     domain: DomainConfig
@@ -205,6 +214,7 @@ class ProjectConfig:
     critical: CriticalConfig | None = None
     optimization: OptimizationConfig | None = None
     benchmark: BenchmarkConfig | None = None
+    conductivity: ConductivityConfig | None = None
 
     def populations(self) -> tuple[PopulationSpec, ...]:
         return tuple(particle.to_population() for particle in self.particles)
@@ -223,7 +233,14 @@ class ProjectConfig:
             axis = "xyz".index(self.percolation.axis)
             if not self.domain.periodic[axis]:
                 raise ConfigurationError("periodic_wrap requires a periodic analysis axis")
-        if operation == "critical":
+        if operation == "conductivity":
+            if self.conductivity is None:
+                raise ConfigurationError("conductivity section is required")
+            if self.percolation.mode != "face_to_face" or self.percolation.wrapped_parent:
+                raise ConfigurationError(
+                    "conductivity requires face_to_face mode with wrapped_parent disabled"
+                )
+        elif operation == "critical":
             if self.critical is None:
                 raise ConfigurationError("critical section is required")
             self.particle_named(self.critical.population)
@@ -449,6 +466,57 @@ def _parse_benchmark(value: object) -> BenchmarkConfig:
     )
 
 
+def _parse_conductance_model(
+    value: object,
+    name: str,
+) -> ConstantConductanceModel | TunnelingConductanceModel:
+    data = _mapping(value, name)
+    kind = data.get("type", "tunneling")
+    if kind not in ("constant", "tunneling"):
+        raise ConfigurationError(f"{name}.type must be constant or tunneling")
+    allowed = {"type", "contact_conductance", "cutoff"}
+    if kind == "tunneling":
+        allowed.add("decay_length")
+    _reject_unknown(data, allowed, name)
+    if "cutoff" not in data:
+        raise ConfigurationError(f"{name}.cutoff is required")
+    g0 = _real(data.get("contact_conductance", 1.0), f"{name}.contact_conductance")
+    cutoff = _real(data["cutoff"], f"{name}.cutoff")
+    if kind == "constant":
+        return ConstantConductanceModel(g0, cutoff)
+    if "decay_length" not in data:
+        raise ConfigurationError(f"{name}.decay_length is required")
+    return TunnelingConductanceModel(
+        g0,
+        _real(data["decay_length"], f"{name}.decay_length"),
+        cutoff,
+    )
+
+
+def _parse_conductivity(value: object) -> ConductivityConfig:
+    data = _mapping(value, "conductivity")
+    _reject_unknown(data, {"model", "electrode_model", "axes", "applied_voltage"}, "conductivity")
+    axes = tuple(_sequence(data.get("axes", ("x", "y", "z")), "conductivity.axes"))
+    if not axes or any(axis not in ("x", "y", "z") for axis in axes):
+        raise ConfigurationError("conductivity.axes must contain x, y, or z")
+    if len(set(axes)) != len(axes):
+        raise ConfigurationError("conductivity.axes must be unique")
+    voltage = _real(data.get("applied_voltage", 1.0), "conductivity.applied_voltage")
+    if voltage <= 0:
+        raise ConfigurationError("conductivity.applied_voltage must be positive")
+    return ConductivityConfig(
+        _parse_conductance_model(data.get("model"), "conductivity.model"),
+        None
+        if "electrode_model" not in data
+        else _parse_conductance_model(
+            data["electrode_model"],
+            "conductivity.electrode_model",
+        ),
+        cast(tuple[str, ...], axes),
+        voltage,
+    )
+
+
 def loads_config(text: str, *, operation: str | None = None) -> ProjectConfig:
     try:
         raw = yaml.load(text, Loader=_UniqueKeyLoader)
@@ -467,6 +535,7 @@ def loads_config(text: str, *, operation: str | None = None) -> ProjectConfig:
         "critical",
         "optimization",
         "benchmark",
+        "conductivity",
     }
     _reject_unknown(data, allowed, "root")
     schema_version = data.get("schema_version")
@@ -497,6 +566,7 @@ def loads_config(text: str, *, operation: str | None = None) -> ProjectConfig:
         None if "critical" not in data else _parse_critical(data["critical"]),
         None if "optimization" not in data else _parse_optimization(data["optimization"]),
         None if "benchmark" not in data else _parse_benchmark(data["benchmark"]),
+        None if "conductivity" not in data else _parse_conductivity(data["conductivity"]),
     )
     config.contact.to_model()
     if operation is not None:

@@ -4,7 +4,9 @@
 [![Python 3.10–3.12](https://img.shields.io/badge/python-3.10--3.12-3776AB.svg)](https://www.python.org/)
 [![License: Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
 
-MicroPerco is a reusable scientific-computing framework for three-dimensional microstructure percolation, Monte Carlo uncertainty quantification, critical-loading estimation, and bounded inverse design.
+MicroPerco is a reusable scientific-computing framework for three-dimensional microstructure percolation, tunneling conductivity, Monte Carlo uncertainty quantification, critical-loading estimation, and bounded inverse design.
+
+**v2.0** adds resistor networks, distance-dependent tunneling, finite-electrode effective conductivity, and directional `sigma_x` / `sigma_y` / `sigma_z`, with compatible v1 APIs and configurations.
 
 ![A seeded mixed-particle MicroPerco realization with finite electrode faces](docs/assets/microstructure_3d.png)
 
@@ -39,6 +41,9 @@ MicroPerco makes those choices explicit and records enough evidence to audit eac
 - Monte Carlo probability estimation with Wilson and Clopper–Pearson intervals.
 - Nested PAVA/logistic/probit critical search with independent family-wise certification.
 - Complete bounded integer mixture search with cost ordering and fixed-family error control.
+- Sparse resistor networks with node voltages, branch currents, Joule power, and conservation checks.
+- Constant or exponentially distance-dependent junction conductance, independent electrode laws, and directional conductivity.
+- Seeded conductivity sampling with shared realizations across axes and recorded samples and standard errors.
 - Strict schema-versioned YAML, stable JSON CLI output, plotting, validation, and benchmarks.
 
 ## Installation
@@ -176,6 +181,51 @@ The built-in generator uses independent uniform centers and isotropic cylinder a
 
 See [Monte Carlo methodology](docs/methodology/monte_carlo.md).
 
+## Conductivity (v2.0)
+
+Measure all three directions on the same explicit microstructure:
+
+```python
+from microperco import (
+    ConstantConductanceModel,
+    Domain,
+    Sphere,
+    TunnelingConductanceModel,
+    analyze_directional_conductivity,
+)
+
+particles = (Sphere((-1.25, 0, 0), 1), Sphere((1.25, 0, 0), 1))
+conductivity = analyze_directional_conductivity(
+    particles,
+    Domain((4.5, 3.0, 3.0), False),
+    TunnelingConductanceModel(
+        contact_conductance=2.0, decay_length=0.5, cutoff=0.5,
+    ),
+    electrode_model=ConstantConductanceModel(contact_conductance=10.0),
+)
+print(conductivity.sigma_x)  # approximately 0.12838526
+print(conductivity.sigma_y, conductivity.sigma_z)  # 0.0, 0.0
+```
+
+The tunneling law is `g(d) = g0 * exp(-2*d/decay_length)` up to an explicit
+cutoff. Particles are equipotential; particle and electrode junctions have
+finite resistance. Each measurement opens its axis and retains transverse
+periodicity. The apparent conductivity `sigma = G*L/A` includes electrode
+resistance. Lengths in metres and conductances in siemens give S/m.
+
+`analyze_conductivity` returns one axis with the complete resistor network,
+junction geometry, node voltages, branch currents, and conservation diagnostics.
+`ResistorNetwork` and `solve_resistor_network` also work on explicit circuits.
+Disconnected networks return zero conductivity; floating potentials are JSON
+`null`. Numerically unresolved networks raise an error.
+
+For Monte Carlo sampling, use `estimate_conductivity` or the CLI configuration
+below. Samples share particles across axes, retain seed provenance, and report
+means and standard errors. These statistics are not performance certification.
+The three finite-electrode measurements are not a full homogenized tensor.
+
+See [conductivity methodology and model limitations](docs/methodology/conductivity.md).
+
 ## Critical Loading
 
 ```python
@@ -214,6 +264,7 @@ All computational commands emit standards-compliant JSON (`NaN` and infinity are
 
 ```bash
 microperco simulate configs/example.yaml
+microperco conductivity configs/conductivity.yaml
 microperco critical configs/example.yaml
 microperco optimize configs/example.yaml
 microperco validate
@@ -224,7 +275,7 @@ Add `--output result.json` to write JSON to a file. Use `microperco COMMAND --he
 
 ## Configuration
 
-Every YAML document starts with `schema_version: 1`. Unknown keys are errors. The main sections are `domain`, `particles`, `contact`, `percolation`, `simulation`, and optional `critical`, `optimization`, and `benchmark` blocks.
+Every YAML document starts with `schema_version: 1`. Unknown keys are errors. The main sections are `domain`, `particles`, `contact`, `percolation`, `simulation`, and optional `critical`, `optimization`, `benchmark`, and `conductivity` blocks. Existing v1 configurations remain valid. The new [conductivity example](configs/conductivity.yaml) declares particle and electrode conductance laws explicitly.
 
 See [the complete generic example](configs/example.yaml). Configuration validation checks shapes, finite physical values, unique population names, modes/backends, count grids and bounds, probability levels, and operation-specific requirements.
 
@@ -234,11 +285,12 @@ See [the complete generic example](configs/example.yaml). Configuration validati
 - [`examples/basic_simulation.py`](examples/basic_simulation.py): one mixed realization and graph audit.
 - [`examples/critical_loading.py`](examples/critical_loading.py): nested critical-loading workflow.
 - [`examples/inverse_design.py`](examples/inverse_design.py): bounded two-material design.
+- [`examples/conductivity.py`](examples/conductivity.py): analytic two-particle tunneling and directional conductivity.
 - [`examples/mathematical_modeling_case/`](examples/mathematical_modeling_case/): data-free Q1–Q4 mapping; restricted source attachments are not redistributed.
 
 ## Validation
 
-Release validation on Python 3.11.15 produced:
+The v1.0 geometry/statistics validation baseline on Python 3.11.15 produced:
 
 - 303 automated tests passed across analytic geometry, all eight PBC combinations, connectivity, acceleration, statistics, configuration, CLI, and figures;
 - 24 cylinder pairs versus SciPy SLSQP: maximum absolute gap error `6.73e-10`;
@@ -247,7 +299,7 @@ Release validation on Python 3.11.15 produced:
 - 15 face-to-face and 9 periodic-wrapping cases: Union-Find and BFS decisions agreed;
 - 100,000 isotropic directions: coordinate means within `0.0021` of zero and second moments within `0.00038` of `1/3`.
 
-Full commands, acceptance criteria, environment, and limitations are in [the validation report](validation/VALIDATION_REPORT.md). Validation figures and numbers are generated, not hand-entered experimental claims.
+Full commands, acceptance criteria, environment, and limitations are in [the validation report](validation/VALIDATION_REPORT.md). Validation figures and numbers are generated, not hand-entered experimental claims. For the v2.0 transport additions and current release checks, see [release readiness](RELEASE_READINESS.md) and [transport validation](validation/TRANSPORT_VALIDATION.md).
 
 ## Benchmarks
 
@@ -262,6 +314,7 @@ See [the benchmark report](benchmarks/BENCHMARK_REPORT.md) and machine-readable 
 ```bash
 python -m pytest
 python validation/run_validation.py
+python validation/run_transport_validation.py
 python validation/run_external_geometry.py --backend scipy
 python benchmarks/run_benchmark.py
 ```
@@ -271,7 +324,7 @@ Fixed seeds, exact configuration, quartiles, dependency versions, and immutable 
 ## Project Structure
 
 ```text
-src/microperco/       geometry, contact, graph, simulation, statistics, I/O, CLI, plots
+src/microperco/       geometry, contact, graph, transport, simulation, statistics, I/O, CLI, plots
 tests/                unit, integration, regression, and golden cases
 validation/           independent geometry and cross-backend validation
 benchmarks/           repeatable performance measurements
@@ -285,13 +338,12 @@ docs/                 methodology, provenance, legal, development, and generated
 
 The following are plans, not current capabilities:
 
-- **v1.x:** additional particle distributions, improved neighbor search, anisotropy analysis, and parallel Monte Carlo.
-- **v2.0:** resistor networks, distance-dependent tunneling, effective conductivity, and directional $\sigma_x/\sigma_y/\sigma_z$.
+- **v2.x:** additional particle distributions, parallel Monte Carlo, intrinsic particle resistance, and fully periodic conductivity homogenization.
 - **Future:** multi-objective design, surrogate models, Bayesian optimization, and GPU acceleration.
 
 ## Citation
 
-Use the metadata in [`CITATION.cff`](CITATION.cff). Until a DOI-backed archive exists, cite the software title, version 1.0.0, repository URL, and access date.
+Use the metadata in [`CITATION.cff`](CITATION.cff). Until a DOI-backed archive exists, cite the software title, version 2.0.0, repository URL, and access date.
 
 ## Contributing
 

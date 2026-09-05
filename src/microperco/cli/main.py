@@ -17,6 +17,7 @@ from ..generation import SphereSpec
 from ..io import dump_json, load_config
 from ..optimization import optimize_mixture
 from ..simulation import estimate_critical_loading, estimate_percolation_probability
+from ..transport import estimate_conductivity
 from ..validation import run_validation_suite
 
 
@@ -39,6 +40,23 @@ def _simulate(config_path: Path) -> object:
         mode=config.percolation.mode,
         wrapped_parent=config.percolation.wrapped_parent,
         confidence=config.simulation.confidence,
+    )
+
+
+def _conductivity(config_path: Path) -> object:
+    config = load_config(config_path, operation="conductivity")
+    assert config.conductivity is not None
+    transport = config.conductivity
+    return estimate_conductivity(
+        config.domain.to_domain(),
+        config.populations(),
+        transport.model,
+        axes=transport.axes,
+        electrode_model=transport.electrode_model,
+        applied_voltage=transport.applied_voltage,
+        trials=config.simulation.trials,
+        seed=config.simulation.seed,
+        neighbor_backend=config.simulation.neighbor_backend,
     )
 
 
@@ -118,13 +136,14 @@ def _benchmark(config_path: Path | None) -> object:
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         prog="microperco",
-        description="3D microstructure percolation simulation and inverse design",
+        description="3D microstructure percolation, conductivity, and inverse design",
     )
     parser.add_argument("--version", action="version", version=f"%(prog)s {__version__}")
     subparsers = parser.add_subparsers(dest="command", required=True)
 
     for name, help_text in (
         ("simulate", "estimate percolation probability"),
+        ("conductivity", "estimate directional conductivity from resistor networks"),
         ("critical", "estimate and certify a critical loading"),
         ("optimize", "search a bounded minimum-cost mixture"),
     ):
@@ -150,6 +169,8 @@ def main(argv: Sequence[str] | None = None) -> int:
     try:
         if args.command == "simulate":
             result = _simulate(args.config)
+        elif args.command == "conductivity":
+            result = _conductivity(args.config)
         elif args.command == "critical":
             result = _critical(args.config)
         elif args.command == "optimize":
