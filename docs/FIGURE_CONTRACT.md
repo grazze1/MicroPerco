@@ -1,5 +1,7 @@
 # Figure contract and QA record
 
+This contract records the existing figures created for the v1 release and retained in the v2.0 documentation. They illustrate geometry, binary connectivity, percolation probability, and the historical contact-search benchmark. They are not electrical-current or conductivity plots. Current transport evidence is in [transport validation](../validation/TRANSPORT_VALIDATION.md).
+
 Backend: Python/Matplotlib, persisted as the selected `nature-figure` backend. All previews and exports use that backend. Target: GitHub documentation with Nature-family publication discipline, not a journal submission. Text remains editable in SVG/PDF; PNG is the web preview.
 
 ## Figure sequence

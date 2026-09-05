@@ -1,5 +1,7 @@
 # Inverse design
 
+The v2.0 `optimize_mixture` workflow minimizes nominal cost subject to a **percolation-probability** target. It does not optimize or certify a target electrical conductivity. Use the [transport API](conductivity.md) to evaluate a design's directional conductivity separately.
+
 MicroPerco searches finite integer bounds for one or more particle populations. Candidate cost is
 
 $$

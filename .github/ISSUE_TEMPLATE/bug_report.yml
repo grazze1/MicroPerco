@@ -10,7 +10,7 @@ body:
     id: version
     attributes:
       label: MicroPerco version
-      placeholder: 1.0.0
+      placeholder: 2.0.0
     validations:
       required: true
   - type: textarea
@@ -31,4 +31,4 @@ body:
     id: numerical
     attributes:
       label: Numerical context
-      description: Units, domain/PBC semantics, threshold, seed, and reference result if applicable.
+      description: Units, domain/PBC semantics, threshold or conductance law (cutoff, decay length, electrode contacts), applied voltage, seed, and reference result if applicable.

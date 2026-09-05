@@ -1,5 +1,7 @@
 # MicroPerco 1.0.0 release readiness
 
+Historical archive for the September 4, 2026 release. Its version-specific capabilities and limitations describe v1.0 only. For the published v2.0.0 release and completed CI gates, use [current release readiness](../../RELEASE_READINESS.md).
+
 Assessment date: 2026-09-04. Scope: GitHub source publication and reproducible
 release-artifact preparation. Overall project verdict: **READY FOR GITHUB
 PUBLICATION**.

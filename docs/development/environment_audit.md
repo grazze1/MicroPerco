@@ -1,10 +1,18 @@
 # Development environment audit
 
-Audit date: 2026-09-04.
+## v2.0 development and release checks
 
-Existing Conda environments were inspected before development: `base`, `coco`, `isaaclab`, `lerobot`, `mm`, and `px4`. No environment was created and no existing environment was modified.
+Updated 2026-09-05. The v2.0.0 implementation reused the existing `mm` environment for 368 tests, Ruff, strict mypy, independent transport validation, geometry regression, and package builds. A temporary virtual environment sharing those runtime dependencies was created for the local installed-wheel smoke test. GitHub Actions separately passed fresh-environment package installation and all six Ubuntu/Windows, Python 3.10–3.12 test jobs; see [release readiness](../../RELEASE_READINESS.md).
 
-## Selected environments
+The recorded v2 runtime versions are Python 3.11.15, NumPy 2.4.6, and SciPy 1.17.1; see [transport results](../../validation/transport_results.json). No new runtime dependency was added. HPP-FCL was not rerun for v2.0.
+
+## Original environment selection (v1.0)
+
+Audit date: 2026-09-04. The statements in this section describe the original environment selection before the v1 release.
+
+Existing Conda environments were inspected before v1 development: `base`, `coco`, `isaaclab`, `lerobot`, `mm`, and `px4`. No environment was created or modified during that selection audit.
+
+### Selected environments
 
 The existing `mm` environment satisfied implementation, tests, plotting, static analysis, validation, benchmarking, and package building:
 
@@ -38,9 +46,12 @@ python -m pytest
 ruff check .
 mypy src/microperco
 python validation/run_validation.py
+python validation/run_transport_validation.py
 python validation/run_external_geometry.py --backend hppfcl
 python benchmarks/run_benchmark.py
 python -m build
 ```
 
 GitHub Actions uses ordinary CPython and pip rather than relying on either local Conda environment.
+
+The external HPP-FCL and benchmark commands reproduce the retained historical workloads; they were not part of the v2 rerun. The transport validation command was added for v2.0.

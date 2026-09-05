@@ -2,6 +2,13 @@
 
 All notable changes follow the principles of [Keep a Changelog](https://keepachangelog.com/).
 
+## [Unreleased]
+
+### Documentation
+
+- Align the repository homepage, documentation index, validation and release status, methodology, security support, and issue templates with the published v2.0.0 capabilities and completed CI checks.
+- Identify retained v1 benchmark, figure, and provenance records as historical evidence with links to the current guides.
+
 ## [2.0.0] - 2026-09-05
 
 ### Added

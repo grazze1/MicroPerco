@@ -46,4 +46,6 @@ An electrode is the finite rectangle forming a selected domain face. Sphere dist
 
 ## Validation
 
-Analytic cases cover end caps, sidewalls, perpendicular axes, near-parallel axes, overlaps, exact thresholds, sphere–cylinder, and sphere–sphere pairs. Random cylinder pairs are independently checked against SciPy constrained optimization and HPP-FCL. See `validation/VALIDATION_REPORT.md`.
+Analytic cases cover end caps, sidewalls, perpendicular axes, near-parallel axes, overlaps, exact thresholds, sphere–cylinder, and sphere–sphere pairs. Cylinder pairs were checked against SciPy constrained optimization in the v2.0 regression rerun; the HPP-FCL comparison remains the recorded v1 baseline. See [the validation report](../../validation/VALIDATION_REPORT.md).
+
+The v2.0 [transport module](conductivity.md) reuses these particle and finite-electrode gaps to assign junction conductances. Electrical cutoff and conductance-law semantics are documented separately from geometric distance accuracy.

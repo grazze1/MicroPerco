@@ -1,5 +1,7 @@
 # Source algorithm audit
 
+Historical provenance audit for the v1.0 rebuild. The table below retains the original scope. The subsequently implemented v2.0 resistor-network and tunneling extension is described in [conductivity methodology](../methodology/conductivity.md); current capabilities are indexed in [the documentation guide](../README.md).
+
 ## Scope
 
 The audited source solved a specific conductive-microstructure modeling problem. It mixed reusable ideas with case-specific units, filenames, data repairs, fixed geometry, and Q1–Q4 reporting. MicroPerco retains the general algorithms and deliberately excludes the problem-specific data layer.

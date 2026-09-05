@@ -1,5 +1,7 @@
 # Resistor networks and directional conductivity (v2.0)
 
+Available in the published [v2.0.0 release](https://github.com/grazze1/MicroPerco/releases/tag/v2.0.0). See the [documentation guide](../README.md) for the other workflows and [current validation](../../validation/VALIDATION_REPORT.md) for the completed release checks.
+
 ## Physical model and units
 
 Each sphere or flat-ended cylinder is an equipotential conductor. Separate

@@ -9,7 +9,7 @@ No third-party source is vendored. No code, figures, problem statements, spreads
 | Dependency | Role | Upstream license summary | Distributed here? |
 |---|---|---|---|
 | NumPy | float64 arrays and random generators | BSD-3-Clause with compatible bundled notices | No |
-| SciPy | statistical distributions and fitted link models | BSD-3-Clause with compatible binary-runtime notices | No |
+| SciPy | statistical distributions, fitted link models, geometry fallback/validation, and v2 sparse resistor-network solves | BSD-3-Clause with compatible binary-runtime notices | No |
 | PyYAML | configuration parsing | MIT | No |
 
 ## Optional/development dependencies

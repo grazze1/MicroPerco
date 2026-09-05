@@ -17,13 +17,17 @@ before materializing or iterating the Cartesian product.
 
 ## Parent fragments
 
-Particles with equal non-null `parent_id` never create an inter-particle contact edge, but they always map to the same logical graph node. This preserves explicitly reconstructed parent continuity without manufacturing an ordinary self-contact edge. By default, fragment coordinates for one parent describe one coherent, common unwrapped lift. Independently wrapped fragments can declare an integer `image_offset` on every member of the parent group; mixed declared/undeclared offsets fail fast, as do offsets on disabled axes.
+Particles with equal non-null `parent_id` never create an inter-particle contact edge, but they always map to the same logical graph node. This preserves explicitly reconstructed parent continuity without manufacturing an ordinary self-contact edge. In percolation analysis, fragment coordinates for one parent describe one coherent, common unwrapped lift by default. Independently wrapped fragments can declare an integer `image_offset` on every member of the parent group; mixed declared/undeclared offsets fail fast, as do offsets on disabled axes.
 
 ## Face semantics
 
 Face-to-face mode opens the selected analysis axis while preserving periodicity on transverse axes. Finite electrode rectangles are tiled on those transverse axes. Periodicity along the analysis axis therefore does not implicitly merge the electrodes.
 
 `wrapped_parent=True` additionally enables a documented historical interpretation in which a parent crossing the analysis seam contacts both electrode sides. It is opt-in because it can strongly change the physical result.
+
+## Conductivity boundaries (v2.0)
+
+Electrical measurements open each selected axis and retain the supplied transverse periodic flags. Distinct particle-image junctions act as parallel resistors; equal-parent fragments share an equipotential node. Transverse self-image loops have no voltage drop and are omitted. Each logical node has at most one finite-resistance junction to each electrode, evaluated at its minimum fragment face gap. The conductivity workflow does not use the historical `wrapped_parent` shortcut or a fully periodic affine-field solve. See [transport boundary semantics](conductivity.md#geometry-boundaries-and-fragment-identities).
 
 ## Wrapping mode
 

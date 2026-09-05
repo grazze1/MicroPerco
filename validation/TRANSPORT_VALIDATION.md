@@ -4,6 +4,8 @@ Recorded on 2026-09-05 with Python 3.11.15, NumPy 2.4.6, and SciPy 1.17.1
 on Linux x86_64. The exact machine-readable results are
 [transport_results.json](transport_results.json).
 
+This is the transport part of the [current v2.0.0 validation](VALIDATION_REPORT.md). [Release-tag CI](https://github.com/grazze1/MicroPerco/actions/runs/33956868659) passed all 368 tests on Ubuntu/Windows and Python 3.10–3.12; the [release artifact workflow](https://github.com/grazze1/MicroPerco/actions/runs/33956868682) passed package and installation checks.
+
 ```bash
 python validation/run_transport_validation.py --output validation/transport_results.json
 python -m pytest tests/unit/test_transport_network.py tests/integration/test_conductivity.py

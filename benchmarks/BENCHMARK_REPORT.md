@@ -1,4 +1,6 @@
-# MicroPerco 1.0 benchmark report
+# Contact-search benchmark report (v1.0 baseline)
+
+Historical performance record retained in the v2.0 documentation. These measurements were not rerun for v2.0 and do not measure the new resistor-network solver or conductivity workflows. Current correctness evidence is in [the v2 validation report](../validation/VALIDATION_REPORT.md).
 
 Benchmark date: 2026-09-04. Raw results are in `benchmark_results.json`; `run_benchmark.py` reproduces the workload.
 

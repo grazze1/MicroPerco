@@ -2,7 +2,7 @@
 
 ## Supported versions
 
-Security fixes are provided for the latest released minor line. During the initial release series, that is version 1.x.
+Security fixes are provided for the latest released minor line. The current release is [2.0.0](https://github.com/grazze1/MicroPerco/releases/tag/v2.0.0), and the supported line is **2.0.x**. Users of 1.x should upgrade; v2.0 retains the existing percolation APIs and YAML schema version 1 configurations.
 
 ## Reporting a vulnerability
 

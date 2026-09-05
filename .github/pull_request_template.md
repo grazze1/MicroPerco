@@ -7,6 +7,7 @@ Describe the user-visible and scientific behavior change.
 - [ ] Unit/integration tests added or updated
 - [ ] Full test suite passes
 - [ ] Reference-backend parity checked where relevant
+- [ ] Transport validation and current/power conservation checked for electrical changes
 
 ## Impact
 

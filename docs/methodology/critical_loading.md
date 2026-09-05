@@ -1,5 +1,7 @@
 # Critical loading
 
+This workflow estimates and certifies a **percolation-probability** crossing. In v2.0, conductivity is measured through the separate [transport API](conductivity.md); this search does not certify a target conductivity.
+
 The critical count is the smallest count on a declared increasing grid whose percolation probability reaches a target. A naive noisy binary search can violate monotonicity and repeatedly select a favorable random fluctuation, so MicroPerco uses a two-phase procedure.
 
 ## Search

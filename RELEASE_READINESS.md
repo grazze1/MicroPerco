@@ -1,8 +1,10 @@
 # MicroPerco 2.0.0 release readiness
 
-Assessment date: 2026-09-05. Scope: the README v2.0 roadmap (resistor
+Assessment date: 2026-09-05. Scope: the implemented v2.0 release (resistor
 networks, distance-dependent tunneling, effective conductivity, and directional
 x/y/z measurements), compatible v1 workflows, and GitHub release artifacts.
+
+**Published:** [MicroPerco v2.0.0](https://github.com/grazze1/MicroPerco/releases/tag/v2.0.0). The tag points to commit `b2fc8839dd3719af1f97122420ec6d769a12656c`. The release contains a universal wheel, source archive, and SHA-256 checksums generated from the GitHub Actions artifacts. The current documentation is indexed in [the documentation guide](docs/README.md).
 
 ## Local release gates
 
@@ -28,10 +30,13 @@ x/y/z measurements), compatible v1 workflows, and GitHub release artifacts.
 - Eight built-in validation checks passed, including the new analytic series
   circuit, finite-electrode chain conductivity, and exponential tunneling law.
 
-GitHub Actions remains configured for Ubuntu and Windows with Python
-3.10–3.12. CI builds distributions; tag builds also check metadata with Twine
-and install the wheel in a fresh virtual environment. The local results above
-do not stand in for those remote runs.
+## Completed GitHub release gates
+
+- [Main-branch CI](https://github.com/grazze1/MicroPerco/actions/runs/33956765989): passed for the release commit.
+- [Release-tag CI](https://github.com/grazze1/MicroPerco/actions/runs/33956868659): all six Ubuntu/Windows and Python 3.10–3.12 test jobs passed, together with the package build. Ruff and the configured strict mypy job passed.
+- [Release artifact workflow](https://github.com/grazze1/MicroPerco/actions/runs/33956868682): package build, Twine metadata checks, and fresh-environment wheel installation/CLI validation passed.
+
+These links record the released code. Later documentation corrections on `main` are separate commits; the v2.0.0 tag and its package artifacts retain their release contents.
 
 ## Reproduce
 

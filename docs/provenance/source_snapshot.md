@@ -1,5 +1,7 @@
 # Source snapshot and integrity record
 
+Historical provenance record for the v1.0.0 rebuild. The inventory and digests below retain their original meaning. For the published v2.0.0 extension and its verification, see [current release readiness](../../RELEASE_READINESS.md).
+
 MicroPerco 1.0.0 was rebuilt beside a read-only source workspace. The source workspace was never used as a build destination and no command intentionally wrote into it.
 
 The source directory did not contain a usable Git repository: its `.git` entry was empty, so neither a commit identifier nor `git status` could provide an integrity baseline. A deterministic substitute baseline was therefore recorded before implementation:

@@ -14,4 +14,6 @@ Weighted Union-Find assigns each graph node an integer lattice potential. An edg
 
 ## Interpretation limits
 
-Connectivity is geometric and binary. The model does not calculate resistance, tunneling distributions, contact area, orientation-dependent conductivity, excluded-volume relaxation, or mechanical deformation. Nominal volume fraction sums particle volumes and can exceed occupied union volume when bodies overlap.
+`analyze_percolation` reports geometric, binary connectivity. For resistance and distance-dependent tunneling, v2.0 provides the separate `analyze_conductivity` and `analyze_directional_conductivity` APIs; see [electrical transport](conductivity.md). A connected threshold graph alone does not determine a conductivity value: junction laws, electrode contacts, and geometry factors are also required.
+
+The transport model uses equipotential particles and finite junction resistances. Contact area, intrinsic particle resistance, excluded-volume relaxation, and mechanical deformation remain outside the current model. Nominal volume fraction sums particle volumes and can exceed occupied union volume when bodies overlap.
