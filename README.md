@@ -311,7 +311,6 @@ The v2.0.0 release passed **368 automated tests**, including all 303 original re
 - 32 resistor networks versus an independent dense solver: maximum relative conductance difference `5.80e-14`.
 - 24 mixed sphere/cylinder transport cases across all eight PBC combinations and three measurement axes: identical optimized/reference resistor networks and conductivity.
 - Geometry regression rerun: 24 cylinder pairs versus SciPy with maximum absolute gap error `6.73e-10`; 24 contact-search comparisons and 24 face/wrapping solver cases agreed.
-- The retained v1 HPP-FCL comparison and benchmark records carry their original dates; they were not rerun as new v2 performance measurements.
 
 Full commands, evidence, and limitations are in [the validation report](validation/VALIDATION_REPORT.md), [transport validation](validation/TRANSPORT_VALIDATION.md), and [release readiness](RELEASE_READINESS.md). These results use synthetic models and do not constitute experimental validation of a material's conductivity.
 
